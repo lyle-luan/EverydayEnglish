@@ -55,7 +55,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9ru-bd-U8y">
                                 <rect key="frame" x="46" y="468" width="32" height="32"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Something about me" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xlu-87-5hB">
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Something about me" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xlu-87-5hB">
                                 <rect key="frame" x="-8" y="546" width="600" height="44"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -89,6 +89,11 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="9ru-bd-U8y" secondAttribute="bottom" multiplier="1.2" id="ywj-JW-NXz"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="chineseLable" destination="rxr-21-0An" id="rhn-6F-NfO"/>
+                        <outlet property="englishLabel" destination="xNu-bP-WNS" id="TPL-Qf-NmN"/>
+                        <outlet property="somethingAboutMeLable" destination="Xlu-87-5hB" id="Gew-H4-W2P"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
