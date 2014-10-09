@@ -20,6 +20,7 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xNu-bP-WNS">
                                 <rect key="frame" x="0.0" y="156" width="600" height="44"/>
+                                <color key="backgroundColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="TjI-03-hbU"/>
                                 </constraints>
@@ -29,6 +30,7 @@
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="中文" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rxr-21-0An">
                                 <rect key="frame" x="0.0" y="256" width="600" height="44"/>
+                                <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -57,12 +59,17 @@
                             </imageView>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Something about me" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xlu-87-5hB">
                                 <rect key="frame" x="-8" y="546" width="600" height="44"/>
+                                <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="xLk-CA-Wsg" appends="YES" id="gRg-fS-eBy"/>
+                                </connections>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="xNu-bP-WNS" firstAttribute="height" secondItem="Xlu-87-5hB" secondAttribute="height" id="31H-0v-eJK"/>
                             <constraint firstItem="zlz-7f-vCT" firstAttribute="centerY" secondItem="Ixq-su-iNb" secondAttribute="centerY" constant="-0.5" id="3Br-nC-ZpZ"/>
@@ -88,6 +95,12 @@
                             <constraint firstAttribute="width" secondItem="Xlu-87-5hB" secondAttribute="width" id="uec-n3-iw6"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="9ru-bd-U8y" secondAttribute="bottom" multiplier="1.2" id="ywj-JW-NXz"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="F1H-W6-jT1" appends="YES" id="ggz-2Z-ckl"/>
+                            <outletCollection property="gestureRecognizers" destination="US3-pO-WIK" appends="YES" id="1bH-2E-OGN"/>
+                            <outletCollection property="gestureRecognizers" destination="toW-72-2Ac" appends="YES" id="rLa-pF-Ubs"/>
+                            <outletCollection property="gestureRecognizers" destination="pvA-Jl-PPK" appends="YES" id="8ab-is-1Qt"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="chineseLable" destination="rxr-21-0An" id="rhn-6F-NfO"/>
@@ -96,6 +109,31 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer delaysTouchesBegan="YES" direction="right" id="F1H-W6-jT1" userLabel="swipeRight">
+                    <connections>
+                        <action selector="swipeRight:" destination="BYZ-38-t0r" id="eJY-3W-jQ5"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer delaysTouchesBegan="YES" direction="up" id="US3-pO-WIK" userLabel="swipeUp">
+                    <connections>
+                        <action selector="swipeUp:" destination="BYZ-38-t0r" id="Uqr-Zx-AdP"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer delaysTouchesBegan="YES" direction="left" id="toW-72-2Ac" userLabel="swipeLeft">
+                    <connections>
+                        <action selector="swipeLeft:" destination="BYZ-38-t0r" id="k9h-3S-d1G"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer delaysTouchesBegan="YES" direction="down" id="pvA-Jl-PPK" userLabel="swipeDown">
+                    <connections>
+                        <action selector="swipeDown:" destination="BYZ-38-t0r" id="ncE-Xa-pTa"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="xLk-CA-Wsg" userLabel="doubleTapOnSomethingAboutMe">
+                    <connections>
+                        <action selector="doubleTap:" destination="BYZ-38-t0r" id="NMh-ah-v5D"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-111" y="121"/>
         </scene>

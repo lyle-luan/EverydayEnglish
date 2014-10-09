@@ -30,128 +30,66 @@ typedef enum ORIENTATION
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    UITapGestureRecognizer *doubleRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
-    [self.somethingAboutMeLable addGestureRecognizer:doubleRecognizer];
-    
-    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
-    [self.view addGestureRecognizer:panRecognizer];
-
 }
 
-- (void)doubleTap:(id)sender
+- (IBAction)swipeRight:(id)sender
 {
-    NSLog(@"view double tap");
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.8f;
+    transition.type = kCATransitionReveal;
+    transition.subtype = kCATransitionFromLeft;
+    //    [self.view exchangeSubviewAtIndex:1 withSubviewAtIndex:0];
+    [self.englishLabel.layer addAnimation:transition forKey:@"animation"];
+    [self.chineseLable.layer addAnimation:transition forKey:@"animation"];
+    
+    self.englishLabel.text = @"new english";
+    self.chineseLable.text = @"new chinese";
 }
 
-- (void)pan:(id)sender
+- (IBAction)swipeUp:(id)sender
 {
-    UIPanGestureRecognizer *panRecognizer = (UIPanGestureRecognizer *)sender;
-    switch (panRecognizer.state)
-    {
-        case UIGestureRecognizerStateBegan:
-        {
-            NSLog(@"UIGestureRecognizerStateBegan");
-            break;
-        }
-        case UIGestureRecognizerStateCancelled:
-        case UIGestureRecognizerStateFailed:
-        case UIGestureRecognizerStatePossible:
-        {
-            NSLog(@"UIGestureRecognizerStateCancelled");
-            break;
-        }
-        case UIGestureRecognizerStateChanged:
-        {
-            NSLog(@"UIGestureRecognizerStateChanged");
-            CGPoint currentPoint = [panRecognizer translationInView:self.view];
-            NSLog(@"%f, %f", currentPoint.x, currentPoint.y);
-            self.englishLabel.center = CGPointMake(currentPoint.x+self.englishLabel.center.x, currentPoint.y+self.englishLabel.center.y);
-            [panRecognizer setTranslation:CGPointZero inView:self.view];
-            break;
-        }
-        case UIGestureRecognizerStateEnded:
-        {
-            NSLog(@"UIGestureRecognizerStateEnded");
-            break;
-        }
-        default:
-        {
-            NSLog(@"UIGestureRecognizerStateUnkown");
-            break;
-        }
-    }
-//    CGPoint currentPoint = [panRecognizer translationInView:self.view];
-//    NSLog(@"orientation:%d", [self orientationOfSlide:currentPoint]);
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.5f;
+    transition.type = kCATransitionReveal;
+    transition.subtype = kCATransitionFromTop;
+    //    [self.view exchangeSubviewAtIndex:1 withSubviewAtIndex:0];
+    [self.englishLabel.layer addAnimation:transition forKey:@"animation"];
+    [self.chineseLable.layer addAnimation:transition forKey:@"animation"];
+    
+    self.englishLabel.text = @"new english";
+    self.chineseLable.text = @"new chinese";
 }
 
-- (SLIDE_ORIENTATION)orientationOfSlide: (CGPoint)newPoint
+- (IBAction)swipeLeft:(id)sender
 {
-    static CGPoint originalPoint = {0, 0};
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.8f;
+    transition.type = kCATransitionReveal;
+    transition.subtype = kCATransitionFromRight;
+    //    [self.view exchangeSubviewAtIndex:1 withSubviewAtIndex:0];
+    [self.englishLabel.layer addAnimation:transition forKey:@"animation"];
+    [self.chineseLable.layer addAnimation:transition forKey:@"animation"];
     
-    if (CGPointEqualToPoint(newPoint, originalPoint) == YES)
-    {
-        return SLIDE_NO;
-    }
+    self.englishLabel.text = @"old english";
+    self.chineseLable.text = @"old chinese";
+}
+
+- (IBAction)swipeDown:(id)sender
+{
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.5f;
+    transition.type = kCATransitionReveal;
+    transition.subtype = kCATransitionFromBottom;
+    //    [self.view exchangeSubviewAtIndex:1 withSubviewAtIndex:0];
+    [self.englishLabel.layer addAnimation:transition forKey:@"animation"];
+    [self.chineseLable.layer addAnimation:transition forKey:@"animation"];
     
-    CGFloat xOffset = newPoint.x - originalPoint.x;
-    CGFloat yOffset = newPoint.y - originalPoint.y;
-    if (xOffset == 0)
-    {
-        if (yOffset > 0)
-        {
-            originalPoint = newPoint;
-            return SLIDE_DOWN;
-        }
-        else
-        {
-            originalPoint = newPoint;
-            return SLIDE_UP;
-        }
-    }
-    if (yOffset == 0)
-    {
-        if (xOffset > 0)
-        {
-            originalPoint = newPoint;
-            return SLIDE_RIGHT;
-        }
-        else
-        {
-            originalPoint = newPoint;
-            return SLIDE_LEFT;
-        }
-    }
-    
-    CGFloat tanRadians = yOffset / xOffset; //tanRadians,yOffset,xOffset; none is 0
-    tanRadians = tanRadians>0 ? tanRadians : -tanRadians;
-    
-    if ((tanRadians<=1) && (tanRadians>0))
-    {
-        if (xOffset < 0)
-        {
-            originalPoint = newPoint;
-            return SLIDE_LEFT;
-        }
-        else
-        {
-            originalPoint = newPoint;
-            return SLIDE_RIGHT;
-        }
-    }
-    else
-    {
-        if (yOffset < 0)
-        {
-            originalPoint = newPoint;
-            return SLIDE_UP;
-        }
-        else
-        {
-            originalPoint = newPoint;
-            return SLIDE_DOWN;
-        }
-    }
+    self.englishLabel.text = @"old english";
+    self.chineseLable.text = @"old chinese";
+}
+
+- (IBAction)doubleTap:(id)sender
+{
 }
 
 - (void)didReceiveMemoryWarning
