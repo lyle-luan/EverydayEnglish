@@ -22,6 +22,7 @@ typedef enum ORIENTATION
 @property (weak, nonatomic) IBOutlet UILabel *somethingAboutMeLable;
 @property (weak, nonatomic) IBOutlet UILabel *englishLabel;
 @property (weak, nonatomic) IBOutlet UILabel *chineseLable;
+@property (weak, nonatomic) IBOutlet UITextField *updateMessage;
 
 @end
 
@@ -32,70 +33,78 @@ typedef enum ORIENTATION
     [super viewDidLoad];
 }
 
-- (IBAction)swipeRight:(id)sender
+- (IBAction)swipeForward:(id)sender
 {
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.8f;
-    transition.type = kCATransitionReveal;
-    transition.subtype = kCATransitionFromLeft;
-    //    [self.view exchangeSubviewAtIndex:1 withSubviewAtIndex:0];
-    [self.englishLabel.layer addAnimation:transition forKey:@"animation"];
-    [self.chineseLable.layer addAnimation:transition forKey:@"animation"];
+    [self swipeForwardEnglish:sender];
+    [self swipeForwardChinese:sender];
+}
+
+- (IBAction)swipeBackward:(id)sender
+{
+    [self swipeBackwardEnglish:sender];
+    [self swipeBackwardChinese:sender];
+}
+
+- (void)swipeForwardEnglish:(id)sender
+{
+    [UIView beginAnimations:@"animation" context:nil];
+    [UIView setAnimationDuration:1.0f];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:self.englishLabel cache:YES];
+    [UIView commitAnimations];
     
     self.englishLabel.text = @"new english";
+}
+
+- (void)swipeForwardChinese:(id)sender
+{
+    [UIView beginAnimations:@"animation" context:nil];
+    [UIView setAnimationDuration:1.0f];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:self.chineseLable cache:YES];
+    [UIView commitAnimations];
+    
     self.chineseLable.text = @"new chinese";
 }
 
-- (IBAction)swipeUp:(id)sender
+- (void)swipeBackwardEnglish:(id)sender
 {
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.5f;
-    transition.type = kCATransitionReveal;
-    transition.subtype = kCATransitionFromTop;
-    //    [self.view exchangeSubviewAtIndex:1 withSubviewAtIndex:0];
-    [self.englishLabel.layer addAnimation:transition forKey:@"animation"];
-    [self.chineseLable.layer addAnimation:transition forKey:@"animation"];
-    
-    self.englishLabel.text = @"new english";
-    self.chineseLable.text = @"new chinese";
-}
-
-- (IBAction)swipeLeft:(id)sender
-{
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.8f;
-    transition.type = kCATransitionReveal;
-    transition.subtype = kCATransitionFromRight;
-    //    [self.view exchangeSubviewAtIndex:1 withSubviewAtIndex:0];
-    [self.englishLabel.layer addAnimation:transition forKey:@"animation"];
-    [self.chineseLable.layer addAnimation:transition forKey:@"animation"];
+    [UIView beginAnimations:@"animation" context:nil];
+    [UIView setAnimationDuration:1.0f];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:self.englishLabel cache:YES];
+    [UIView commitAnimations];
     
     self.englishLabel.text = @"old english";
-    self.chineseLable.text = @"old chinese";
 }
 
-- (IBAction)swipeDown:(id)sender
+- (void)swipeBackwardChinese:(id)sender
 {
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.5f;
-    transition.type = kCATransitionReveal;
-    transition.subtype = kCATransitionFromBottom;
-    //    [self.view exchangeSubviewAtIndex:1 withSubviewAtIndex:0];
-    [self.englishLabel.layer addAnimation:transition forKey:@"animation"];
-    [self.chineseLable.layer addAnimation:transition forKey:@"animation"];
+    [UIView beginAnimations:@"animation" context:nil];
+    [UIView setAnimationDuration:1.0f];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:self.chineseLable cache:YES];
+    [UIView commitAnimations];
     
-    self.englishLabel.text = @"old english";
     self.chineseLable.text = @"old chinese";
 }
 
 - (IBAction)doubleTap:(id)sender
 {
+    CATransition *transition = [CATransition animation];
+    transition.duration = 1.0f;
+    
+    transition.type = kCATransitionFade;
+    transition.subtype = kCATransitionFromTop;
+    
+    self.updateMessage.hidden = NO;
+    self.somethingAboutMeLable.hidden = YES;
+    [self.somethingAboutMeLable.layer addAnimation:transition forKey:@"animation"];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

@@ -57,8 +57,15 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9ru-bd-U8y">
                                 <rect key="frame" x="46" y="468" width="32" height="32"/>
                             </imageView>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Something about me" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xlu-87-5hB">
-                                <rect key="frame" x="-8" y="546" width="600" height="44"/>
+                            <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="what you want" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VwG-r1-nKR">
+                                <rect key="frame" x="0.0" y="546" width="600" height="44"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Something about me" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xlu-87-5hB">
+                                <rect key="frame" x="0.0" y="546" width="600" height="44"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -73,15 +80,20 @@
                         <constraints>
                             <constraint firstItem="xNu-bP-WNS" firstAttribute="height" secondItem="Xlu-87-5hB" secondAttribute="height" id="31H-0v-eJK"/>
                             <constraint firstItem="zlz-7f-vCT" firstAttribute="centerY" secondItem="Ixq-su-iNb" secondAttribute="centerY" constant="-0.5" id="3Br-nC-ZpZ"/>
+                            <constraint firstItem="VwG-r1-nKR" firstAttribute="height" secondItem="Xlu-87-5hB" secondAttribute="height" id="8wg-8R-6Vp"/>
                             <constraint firstAttribute="width" secondItem="xNu-bP-WNS" secondAttribute="width" id="EkP-k9-yhN"/>
+                            <constraint firstItem="VwG-r1-nKR" firstAttribute="width" secondItem="Xlu-87-5hB" secondAttribute="width" id="EqV-LD-Mqd"/>
+                            <constraint firstItem="VwG-r1-nKR" firstAttribute="centerX" secondItem="Xlu-87-5hB" secondAttribute="centerX" id="FaL-XV-vTr"/>
                             <constraint firstItem="Ixq-su-iNb" firstAttribute="centerX" secondItem="9ru-bd-U8y" secondAttribute="centerX" id="GOW-Iw-5E5"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Xlu-87-5hB" secondAttribute="bottom" constant="10" id="GfK-Y0-4rM"/>
-                            <constraint firstItem="xNu-bP-WNS" firstAttribute="centerX" secondItem="Xlu-87-5hB" secondAttribute="centerX" constant="8" id="H35-pu-gKW"/>
+                            <constraint firstItem="xNu-bP-WNS" firstAttribute="centerX" secondItem="Xlu-87-5hB" secondAttribute="centerX" id="H35-pu-gKW"/>
                             <constraint firstAttribute="centerX" secondItem="xNu-bP-WNS" secondAttribute="centerX" id="JCK-CC-sSB"/>
                             <constraint firstItem="zlz-7f-vCT" firstAttribute="height" secondItem="Ixq-su-iNb" secondAttribute="height" id="JVl-wZ-af1"/>
                             <constraint firstItem="zlz-7f-vCT" firstAttribute="leading" secondItem="Ixq-su-iNb" secondAttribute="leading" constant="40" id="Mxb-lA-1K0"/>
+                            <constraint firstItem="VwG-r1-nKR" firstAttribute="centerY" secondItem="Xlu-87-5hB" secondAttribute="centerY" id="PHe-zs-PnY"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="xNu-bP-WNS" secondAttribute="bottom" multiplier="3" id="PaK-oW-NWf"/>
                             <constraint firstItem="rxr-21-0An" firstAttribute="width" secondItem="xNu-bP-WNS" secondAttribute="width" id="Rh3-Ev-B9P"/>
+                            <constraint firstItem="xNu-bP-WNS" firstAttribute="width" secondItem="Xlu-87-5hB" secondAttribute="width" id="TcV-90-ro0"/>
                             <constraint firstItem="41a-uS-QAL" firstAttribute="leading" secondItem="9ru-bd-U8y" secondAttribute="leading" constant="40" id="Wqa-gm-TrG"/>
                             <constraint firstItem="rxr-21-0An" firstAttribute="height" secondItem="xNu-bP-WNS" secondAttribute="height" id="YQM-0s-u5V"/>
                             <constraint firstItem="Ixq-su-iNb" firstAttribute="width" secondItem="9ru-bd-U8y" secondAttribute="width" id="bbK-uQ-T2s"/>
@@ -95,6 +107,11 @@
                             <constraint firstAttribute="width" secondItem="Xlu-87-5hB" secondAttribute="width" id="uec-n3-iw6"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="9ru-bd-U8y" secondAttribute="bottom" multiplier="1.2" id="ywj-JW-NXz"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="uec-n3-iw6"/>
+                            </mask>
+                        </variation>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="F1H-W6-jT1" appends="YES" id="ggz-2Z-ckl"/>
                             <outletCollection property="gestureRecognizers" destination="US3-pO-WIK" appends="YES" id="1bH-2E-OGN"/>
@@ -106,27 +123,28 @@
                         <outlet property="chineseLable" destination="rxr-21-0An" id="rhn-6F-NfO"/>
                         <outlet property="englishLabel" destination="xNu-bP-WNS" id="TPL-Qf-NmN"/>
                         <outlet property="somethingAboutMeLable" destination="Xlu-87-5hB" id="Gew-H4-W2P"/>
+                        <outlet property="updateMessage" destination="VwG-r1-nKR" id="Eii-Nb-k23"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer delaysTouchesBegan="YES" direction="right" id="F1H-W6-jT1" userLabel="swipeRight">
                     <connections>
-                        <action selector="swipeRight:" destination="BYZ-38-t0r" id="eJY-3W-jQ5"/>
+                        <action selector="swipeForward:" destination="BYZ-38-t0r" id="33s-Gs-RLU"/>
                     </connections>
                 </swipeGestureRecognizer>
                 <swipeGestureRecognizer delaysTouchesBegan="YES" direction="up" id="US3-pO-WIK" userLabel="swipeUp">
                     <connections>
-                        <action selector="swipeUp:" destination="BYZ-38-t0r" id="Uqr-Zx-AdP"/>
+                        <action selector="swipeForward:" destination="BYZ-38-t0r" id="cIn-Q9-qF8"/>
                     </connections>
                 </swipeGestureRecognizer>
                 <swipeGestureRecognizer delaysTouchesBegan="YES" direction="left" id="toW-72-2Ac" userLabel="swipeLeft">
                     <connections>
-                        <action selector="swipeLeft:" destination="BYZ-38-t0r" id="k9h-3S-d1G"/>
+                        <action selector="swipeBackward:" destination="BYZ-38-t0r" id="fKF-GI-ZBF"/>
                     </connections>
                 </swipeGestureRecognizer>
                 <swipeGestureRecognizer delaysTouchesBegan="YES" direction="down" id="pvA-Jl-PPK" userLabel="swipeDown">
                     <connections>
-                        <action selector="swipeDown:" destination="BYZ-38-t0r" id="ncE-Xa-pTa"/>
+                        <action selector="swipeBackward:" destination="BYZ-38-t0r" id="vGt-KB-m3c"/>
                     </connections>
                 </swipeGestureRecognizer>
                 <tapGestureRecognizer numberOfTapsRequired="2" id="xLk-CA-Wsg" userLabel="doubleTapOnSomethingAboutMe">
