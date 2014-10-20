@@ -17,12 +17,12 @@ typedef enum ORIENTATION
     SLIDE_DOWN,
 }SLIDE_ORIENTATION;
 
-@interface ViewController ()
+@interface ViewController () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *somethingAboutMeLable;
 @property (weak, nonatomic) IBOutlet UILabel *englishLabel;
 @property (weak, nonatomic) IBOutlet UILabel *chineseLable;
-@property (weak, nonatomic) IBOutlet UITextField *updateMessage;
+@property (weak, nonatomic) IBOutlet UITextField *updateMessageTextField;
 
 @end
 
@@ -31,6 +31,23 @@ typedef enum ORIENTATION
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+//    NSArray *ducumentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentDirectory = ducumentPaths.firstObject;
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    NSString *englishChineseTextPath = [documentDirectory stringByAppendingPathComponent:@"englishChinese.txt"];
+//    if ([fileManager fileExistsAtPath:englishChineseTextPath] == NO)
+//    {
+//        if ([fileManager createDirectoryAtPath:englishChineseTextPath withIntermediateDirectories:NO attributes:nil error:nil] == YES)
+//        {
+//            NSLog(@"success");
+//        }
+//        else
+//        {
+//            NSLog(@"failed");
+//        }
+//    }
+//    NSArray *cachePaths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+//    NSString *cacheDirectory = cachePaths.firstObject;
 }
 
 - (IBAction)swipeForward:(id)sender
@@ -73,9 +90,8 @@ typedef enum ORIENTATION
     [UIView setAnimationDuration:1.0f];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:self.englishLabel cache:YES];
-    [UIView commitAnimations];
-    
     self.englishLabel.text = @"old english";
+    [UIView commitAnimations];
 }
 
 - (void)swipeBackwardChinese:(id)sender
@@ -84,22 +100,35 @@ typedef enum ORIENTATION
     [UIView setAnimationDuration:1.0f];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:self.chineseLable cache:YES];
-    [UIView commitAnimations];
-    
     self.chineseLable.text = @"old chinese";
+    [UIView commitAnimations];
 }
 
 - (IBAction)doubleTap:(id)sender
 {
-    CATransition *transition = [CATransition animation];
-    transition.duration = 1.0f;
+    [self.updateMessageTextField becomeFirstResponder];
+}
+
+- (IBAction)updateMessage:(id)sender
+{
+    [self.updateMessageTextField resignFirstResponder];
+}
+
+- (IBAction)editMessage:(id)sender
+{
+    //被键盘推上去。
+    [UIView beginAnimations:@"animation" context:nil];
+    [UIView setAnimationDuration:5.0f];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    self.updateMessageTextField.frame = CGRectMake(0.0f, 0.0f, 100.0f, 100.0f);
+    [UIView commitAnimations];
+}
+
+- (IBAction)updateMessageTextFieldEditingChanged:(id)sender
+{
+    CGRect frame = self.updateMessageTextField.frame;
     
-    transition.type = kCATransitionFade;
-    transition.subtype = kCATransitionFromTop;
-    
-    self.updateMessage.hidden = NO;
-    self.somethingAboutMeLable.hidden = YES;
-    [self.somethingAboutMeLable.layer addAnimation:transition forKey:@"animation"];
+    NSLog(@"%f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
 }
 
 - (void)didReceiveMemoryWarning
