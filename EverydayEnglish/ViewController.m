@@ -134,9 +134,10 @@ CGFloat KEYBOARD_HEIGHT_MAX      = 270.0f;
 
 - (void)animationUpdateMessageTextFieldWithConstant:(CGFloat)anConstant withDuration:(NSTimeInterval)anDuration
 {
+    //UIKeyboardAnimationDurationUserInfoKey，用来改变键盘弹出时间，使键盘和textfield同时出现？
     [self replaceUIView:self.updateMessageTextField withAttribute:NSLayoutAttributeCenterY withConstant:anConstant];
     
-    [UIView animateWithDuration:anDuration animations:^{
+    [UIView animateWithDuration:anDuration delay:0 options:UIViewAnimationOptionTransitionNone|UIViewAnimationOptionCurveEaseInOut animations:^{
         [self.view layoutIfNeeded];
     } completion:^(BOOL isfinished){
         if (isfinished == YES)
@@ -147,7 +148,6 @@ CGFloat KEYBOARD_HEIGHT_MAX      = 270.0f;
             NSLog(@"TODO://");
         }
     }];
-    
 }
 
 - (void)replaceUIView: (UIView *)aUIView withAttribute: (int)anAttribute withConstant: (CGFloat)anConstant
@@ -160,22 +160,6 @@ CGFloat KEYBOARD_HEIGHT_MAX      = 270.0f;
             NSLog(@"move view");
         }
     }
-}
-
-- (void)makeAboveAnimationActiveWithDuration: (NSTimeInterval)anDuration
-{
-    [UIView animateWithDuration:anDuration animations:^{
-        [self.view layoutIfNeeded];
-    } completion:^(BOOL isfinished){
-        if (isfinished == YES)
-        {
-//            [self.updateMessageTextField becomeFirstResponder];
-        }
-        else
-        {
-            NSLog(@"TODO://");
-        }
-    }];
 }
 
 - (IBAction)editMessage:(id)sender
@@ -196,9 +180,6 @@ CGFloat KEYBOARD_HEIGHT_MAX      = 270.0f;
     if (CGSizeEqualToSize(self.kbSizeOriginal, CGSizeZero))
     {
         NSLog(@"show");
-        NSDictionary* info = [aNotification userInfo];
-        CGSize kbSizeNow = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-        
         [self animationUpdateMessageTextFieldWithConstant:-(kbSizeNow.height) withDuration:kbSizeNow.height/KEYBOARD_HEIGHT_MAX];
         [self.updateMessageTextField becomeFirstResponder];
         
@@ -217,8 +198,6 @@ CGFloat KEYBOARD_HEIGHT_MAX      = 270.0f;
     else
     {
         NSLog(@"change");
-        NSDictionary* info = [aNotification userInfo];
-        CGSize kbSizeNow = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
         
         if (self.kbSizeOriginal.height > kbSizeNow.height)
         {
