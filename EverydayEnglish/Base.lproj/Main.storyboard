@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -49,7 +49,7 @@
                                 <rect key="frame" x="0.0" y="550" width="600" height="50"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="yes" spellCheckingType="yes" keyboardType="alphabet" returnKeyType="send"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="yes" spellCheckingType="yes" returnKeyType="send"/>
                                 <connections>
                                     <action selector="editMessage:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="9hL-1L-bjL"/>
                                     <action selector="updateMessage:" destination="BYZ-38-t0r" eventType="editingDidEndOnExit" id="zeG-vf-cuq"/>
@@ -78,18 +78,16 @@
                             <constraint firstItem="xNu-bP-WNS" firstAttribute="bottom" secondItem="rxr-21-0An" secondAttribute="top" id="8go-dP-W4l"/>
                             <constraint firstItem="41a-uS-QAL" firstAttribute="height" secondItem="xNu-bP-WNS" secondAttribute="height" id="9Xd-Rc-cmV"/>
                             <constraint firstAttribute="width" secondItem="xNu-bP-WNS" secondAttribute="width" id="EkP-k9-yhN"/>
-                            <constraint firstItem="Xlu-87-5hB" firstAttribute="height" secondItem="VwG-r1-nKR" secondAttribute="height" id="F3b-aD-OiI"/>
+                            <constraint firstItem="VwG-r1-nKR" firstAttribute="height" secondItem="Xlu-87-5hB" secondAttribute="height" id="F3b-aD-OiI"/>
                             <constraint firstItem="41a-uS-QAL" firstAttribute="height" secondItem="zlz-7f-vCT" secondAttribute="height" constant="50" id="I6R-e4-Jl0"/>
-                            <constraint firstItem="Xlu-87-5hB" firstAttribute="height" secondItem="xNu-bP-WNS" secondAttribute="height" multiplier="0.5" id="J2e-HN-ExK"/>
                             <constraint firstAttribute="centerX" secondItem="xNu-bP-WNS" secondAttribute="centerX" id="JCK-CC-sSB"/>
                             <constraint firstItem="xNu-bP-WNS" firstAttribute="centerX" secondItem="rxr-21-0An" secondAttribute="centerX" id="KAf-Yt-1Tt"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Xlu-87-5hB" secondAttribute="bottom" id="KCF-Ur-YBp"/>
                             <constraint firstItem="41a-uS-QAL" firstAttribute="width" secondItem="zlz-7f-vCT" secondAttribute="width" id="LAB-m3-xl1"/>
                             <constraint firstItem="rxr-21-0An" firstAttribute="bottom" secondItem="41a-uS-QAL" secondAttribute="top" id="NN2-Gb-tcF"/>
                             <constraint firstItem="41a-uS-QAL" firstAttribute="centerX" secondItem="zlz-7f-vCT" secondAttribute="centerX" id="OFR-nW-fcB"/>
-                            <constraint firstItem="Xlu-87-5hB" firstAttribute="centerY" secondItem="VwG-r1-nKR" secondAttribute="centerY" id="RyL-ha-mmQ"/>
-                            <constraint firstItem="Xlu-87-5hB" firstAttribute="centerX" secondItem="VwG-r1-nKR" secondAttribute="centerX" id="S1s-o5-nGQ"/>
-                            <constraint firstItem="41a-uS-QAL" firstAttribute="height" secondItem="zlz-7f-vCT" secondAttribute="height" multiplier="0.5" id="Sr1-As-M9T"/>
+                            <constraint firstItem="VwG-r1-nKR" firstAttribute="centerY" secondItem="Xlu-87-5hB" secondAttribute="centerY" id="RyL-ha-mmQ"/>
+                            <constraint firstItem="VwG-r1-nKR" firstAttribute="centerX" secondItem="Xlu-87-5hB" secondAttribute="centerX" id="S1s-o5-nGQ"/>
                             <constraint firstItem="xNu-bP-WNS" firstAttribute="height" secondItem="rxr-21-0An" secondAttribute="height" id="ccu-6f-cAe"/>
                             <constraint firstItem="41a-uS-QAL" firstAttribute="width" secondItem="xNu-bP-WNS" secondAttribute="width" id="gsb-ZH-tHC"/>
                             <constraint firstItem="xNu-bP-WNS" firstAttribute="width" secondItem="rxr-21-0An" secondAttribute="width" id="gxe-en-P6D"/>
@@ -97,17 +95,9 @@
                             <constraint firstItem="41a-uS-QAL" firstAttribute="centerX" secondItem="xNu-bP-WNS" secondAttribute="centerX" id="jIn-O0-NRR"/>
                             <constraint firstItem="Xlu-87-5hB" firstAttribute="width" secondItem="xNu-bP-WNS" secondAttribute="width" id="jZE-V1-68Z"/>
                             <constraint firstItem="41a-uS-QAL" firstAttribute="bottom" secondItem="zlz-7f-vCT" secondAttribute="top" id="kFw-hh-9Tg"/>
-                            <constraint firstItem="zlz-7f-vCT" firstAttribute="height" secondItem="Xlu-87-5hB" secondAttribute="height" id="ow9-55-jGV"/>
                             <constraint firstItem="xNu-bP-WNS" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.25" id="spT-t4-tFp"/>
-                            <constraint firstItem="Xlu-87-5hB" firstAttribute="width" secondItem="VwG-r1-nKR" secondAttribute="width" id="tHN-YT-Fj8"/>
+                            <constraint firstItem="VwG-r1-nKR" firstAttribute="width" secondItem="Xlu-87-5hB" secondAttribute="width" id="tHN-YT-Fj8"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="Sr1-As-M9T"/>
-                                <exclude reference="ow9-55-jGV"/>
-                                <exclude reference="J2e-HN-ExK"/>
-                            </mask>
-                        </variation>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="F1H-W6-jT1" appends="YES" id="ggz-2Z-ckl"/>
                             <outletCollection property="gestureRecognizers" destination="US3-pO-WIK" appends="YES" id="1bH-2E-OGN"/>

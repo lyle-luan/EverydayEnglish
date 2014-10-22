@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>1B2A3910-28D8-4EAD-BC63-1FE2FDE78DC6</string>
+	<key>IDESourceControlProjectName</key>
+	<string>EverydayEnglish</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>959F7B460659DB8D2D7C38AEE7DDF7537DE3BE64</key>
+		<string>/Users/aaron/Documents/EverydayEnglish</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>EverydayEnglish.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>959F7B460659DB8D2D7C38AEE7DDF7537DE3BE64</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>/Users/aaron/Documents/EverydayEnglish</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>959F7B460659DB8D2D7C38AEE7DDF7537DE3BE64</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>959F7B460659DB8D2D7C38AEE7DDF7537DE3BE64</string>
+			<key>IDESourceControlWCCName</key>
+			<string>EverydayEnglish</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -17,12 +17,15 @@ typedef enum ORIENTATION
     SLIDE_DOWN,
 }SLIDE_ORIENTATION;
 
+CGFloat KEYBOARD_HEIGHT_MAX      = 270.0f;
+
 @interface ViewController () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *somethingAboutMeLable;
 @property (weak, nonatomic) IBOutlet UILabel *englishLabel;
 @property (weak, nonatomic) IBOutlet UILabel *chineseLable;
 @property (weak, nonatomic) IBOutlet UITextField *updateMessageTextField;
+@property (nonatomic) CGSize kbSizeOriginal;
 
 @end
 
@@ -31,6 +34,7 @@ typedef enum ORIENTATION
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.kbSizeOriginal = CGSizeZero;
 //    NSArray *ducumentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 //    NSString *documentDirectory = ducumentPaths.firstObject;
 //    NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -48,6 +52,18 @@ typedef enum ORIENTATION
 //    }
 //    NSArray *cachePaths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
 //    NSString *cacheDirectory = cachePaths.firstObject;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChangeFrame:) name:UIKeyboardDidChangeFrameNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (IBAction)swipeForward:(id)sender
@@ -106,6 +122,8 @@ typedef enum ORIENTATION
 
 - (IBAction)doubleTap:(id)sender
 {
+    NSLog(@"doubleTap");
+    [self animationUpdateMessageTextFieldWithConstant:-KEYBOARD_HEIGHT_MAX withDuration:1];
     [self.updateMessageTextField becomeFirstResponder];
 }
 
@@ -114,21 +132,106 @@ typedef enum ORIENTATION
     [self.updateMessageTextField resignFirstResponder];
 }
 
+- (void)animationUpdateMessageTextFieldWithConstant:(CGFloat)anConstant withDuration:(NSTimeInterval)anDuration
+{
+    [self replaceUIView:self.updateMessageTextField withAttribute:NSLayoutAttributeCenterY withConstant:anConstant];
+    
+    [UIView animateWithDuration:anDuration animations:^{
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL isfinished){
+        if (isfinished == YES)
+        {
+        }
+        else
+        {
+            NSLog(@"TODO://");
+        }
+    }];
+    
+}
+
+- (void)replaceUIView: (UIView *)aUIView withAttribute: (int)anAttribute withConstant: (CGFloat)anConstant
+{
+    for (NSLayoutConstraint *constraint in aUIView.superview.constraints)
+    {
+        if (constraint.firstItem == aUIView && constraint.firstAttribute == anAttribute)
+        {
+            constraint.constant = anConstant;
+            NSLog(@"move view");
+        }
+    }
+}
+
+- (void)makeAboveAnimationActiveWithDuration: (NSTimeInterval)anDuration
+{
+    [UIView animateWithDuration:anDuration animations:^{
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL isfinished){
+        if (isfinished == YES)
+        {
+//            [self.updateMessageTextField becomeFirstResponder];
+        }
+        else
+        {
+            NSLog(@"TODO://");
+        }
+    }];
+}
+
 - (IBAction)editMessage:(id)sender
 {
     //被键盘推上去。
-    [UIView beginAnimations:@"animation" context:nil];
-    [UIView setAnimationDuration:5.0f];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    self.updateMessageTextField.frame = CGRectMake(0.0f, 0.0f, 100.0f, 100.0f);
-    [UIView commitAnimations];
+    NSLog(@"editMessage");
 }
 
 - (IBAction)updateMessageTextFieldEditingChanged:(id)sender
 {
-    CGRect frame = self.updateMessageTextField.frame;
-    
-    NSLog(@"%f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+    NSLog(@"updateMessageTextFieldEditingChanged");
+}
+
+-(void)keyboardDidChangeFrame:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSizeNow = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    if (CGSizeEqualToSize(self.kbSizeOriginal, CGSizeZero))
+    {
+        NSLog(@"show");
+        NSDictionary* info = [aNotification userInfo];
+        CGSize kbSizeNow = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+        
+        [self animationUpdateMessageTextFieldWithConstant:-(kbSizeNow.height) withDuration:kbSizeNow.height/KEYBOARD_HEIGHT_MAX];
+        [self.updateMessageTextField becomeFirstResponder];
+        
+        self.kbSizeOriginal = kbSizeNow;
+        
+        return;
+    }
+    else if (CGSizeEqualToSize(self.kbSizeOriginal, kbSizeNow) == YES)
+    {
+        NSLog(@"hide");
+        
+        [self animationUpdateMessageTextFieldWithConstant:0 withDuration:0.5];
+        
+        self.kbSizeOriginal = CGSizeZero;
+    }
+    else
+    {
+        NSLog(@"change");
+        NSDictionary* info = [aNotification userInfo];
+        CGSize kbSizeNow = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+        
+        if (self.kbSizeOriginal.height > kbSizeNow.height)
+        {
+            [self animationUpdateMessageTextFieldWithConstant:-(kbSizeNow.height) withDuration:kbSizeNow.height/KEYBOARD_HEIGHT_MAX];
+        }
+        else
+        {
+            [self animationUpdateMessageTextFieldWithConstant:-(kbSizeNow.height+1) withDuration:kbSizeNow.height/KEYBOARD_HEIGHT_MAX];
+        }
+        [self.updateMessageTextField becomeFirstResponder];
+        
+        self.kbSizeOriginal = kbSizeNow;
+    }
 }
 
 - (void)didReceiveMemoryWarning
