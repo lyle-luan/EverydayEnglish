@@ -17,7 +17,8 @@ typedef enum ORIENTATION
     SLIDE_DOWN,
 }SLIDE_ORIENTATION;
 
-CGFloat KEYBOARD_HEIGHT_MAX      = 270.0f;
+static const CGFloat KEYBOARD_HEIGHT_MAX      = 270.0f;
+static const NSInteger TEXTFILED_LEN_MAX      = 100;
 
 @interface ViewController () <UITextFieldDelegate>
 
@@ -35,6 +36,7 @@ CGFloat KEYBOARD_HEIGHT_MAX      = 270.0f;
 {
     [super viewDidLoad];
     self.kbSizeOriginal = CGSizeZero;
+    self.updateMessageTextField.delegate = self;
 //    NSArray *ducumentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 //    NSString *documentDirectory = ducumentPaths.firstObject;
 //    NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -122,13 +124,13 @@ CGFloat KEYBOARD_HEIGHT_MAX      = 270.0f;
 
 - (IBAction)doubleTap:(id)sender
 {
-    NSLog(@"doubleTap");
     [self animationUpdateMessageTextFieldWithConstant:-KEYBOARD_HEIGHT_MAX withDuration:1];
     [self.updateMessageTextField becomeFirstResponder];
 }
 
 - (IBAction)updateMessage:(id)sender
 {
+    [self animationUpdateMessageTextFieldWithConstant:0 withDuration:0.8];
     [self.updateMessageTextField resignFirstResponder];
 }
 
@@ -162,15 +164,25 @@ CGFloat KEYBOARD_HEIGHT_MAX      = 270.0f;
     }
 }
 
-- (IBAction)editMessage:(id)sender
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    //被键盘推上去。
-    NSLog(@"editMessage");
-}
-
-- (IBAction)updateMessageTextFieldEditingChanged:(id)sender
-{
-    NSLog(@"updateMessageTextFieldEditingChanged");
+    if (string.length == 0)
+    {
+        //可以删除
+        return YES;
+    }
+    
+    if ((textField.text.length-range.length+string.length) > TEXTFILED_LEN_MAX)
+    {
+        //可以选择部分输入替换
+        return NO;
+    }
+    else
+    {
+        //不限制联想造成输入超长，因为不用那么严格。
+        //联想超长是指：还能再输入一个字符，比如输入y，系统联想提示you，点击提示的you，you三个字符都输入到输入框内，超过最长限制。
+        return YES;
+    }
 }
 
 -(void)keyboardDidChangeFrame:(NSNotification*)aNotification
@@ -190,8 +202,6 @@ CGFloat KEYBOARD_HEIGHT_MAX      = 270.0f;
     else if (CGSizeEqualToSize(self.kbSizeOriginal, kbSizeNow) == YES)
     {
         NSLog(@"hide");
-        
-        [self animationUpdateMessageTextFieldWithConstant:0 withDuration:0.5];
         
         self.kbSizeOriginal = CGSizeZero;
     }

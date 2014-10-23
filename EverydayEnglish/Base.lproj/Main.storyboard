@@ -34,6 +34,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="中文" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41a-uS-QAL" userLabel="chineseButton">
                                 <rect key="frame" x="0.0" y="300" width="600" height="150"/>
                                 <color key="backgroundColor" red="0.60000002384185791" green="0.40000000596046448" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -51,9 +52,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="yes" spellCheckingType="yes" returnKeyType="send"/>
                                 <connections>
-                                    <action selector="editMessage:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="9hL-1L-bjL"/>
                                     <action selector="updateMessage:" destination="BYZ-38-t0r" eventType="editingDidEndOnExit" id="zeG-vf-cuq"/>
-                                    <action selector="updateMessageTextFieldEditingChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="OzX-zz-JHH"/>
                                 </connections>
                             </textField>
                             <label opaque="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Something about me" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xlu-87-5hB" userLabel="somethingAboutMe">
@@ -103,6 +102,7 @@
                             <outletCollection property="gestureRecognizers" destination="US3-pO-WIK" appends="YES" id="1bH-2E-OGN"/>
                             <outletCollection property="gestureRecognizers" destination="toW-72-2Ac" appends="YES" id="rLa-pF-Ubs"/>
                             <outletCollection property="gestureRecognizers" destination="pvA-Jl-PPK" appends="YES" id="8ab-is-1Qt"/>
+                            <outletCollection property="gestureRecognizers" destination="ztb-9R-u3I" appends="YES" id="g4n-8T-Vc8"/>
                         </connections>
                     </view>
                     <connections>
@@ -136,6 +136,11 @@
                 <tapGestureRecognizer numberOfTapsRequired="2" id="xLk-CA-Wsg" userLabel="doubleTapOnSomethingAboutMe">
                     <connections>
                         <action selector="doubleTap:" destination="BYZ-38-t0r" id="NMh-ah-v5D"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="ztb-9R-u3I" userLabel="resignFirstResponderTextField">
+                    <connections>
+                        <action selector="updateMessage:" destination="BYZ-38-t0r" id="tRg-zF-k3e"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
