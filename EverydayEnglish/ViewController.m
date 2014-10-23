@@ -70,56 +70,52 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
 
 - (IBAction)swipeForward:(id)sender
 {
-    [self swipeForwardEnglish:sender];
-    [self swipeForwardChinese:sender];
+    [UIView transitionWithView:self.englishLabel duration:1 options:UIViewAnimationOptionTransitionCurlUp|UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.englishLabel.text = @"new english";
+    } completion:^(BOOL isfinished){
+        if (isfinished == YES)
+        {
+        }
+        else
+        {
+        }
+    }];
+    
+    [UIView transitionWithView:self.chineseLable duration:1 options:UIViewAnimationOptionTransitionCurlUp|UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.chineseLable.text = @"new chinese";
+    } completion:^(BOOL isfinished){
+        if (isfinished == YES)
+        {
+        }
+        else
+        {
+        }
+    }];
 }
 
 - (IBAction)swipeBackward:(id)sender
 {
-    [self swipeBackwardEnglish:sender];
-    [self swipeBackwardChinese:sender];
-}
-
-- (void)swipeForwardEnglish:(id)sender
-{
-    [UIView beginAnimations:@"animation" context:nil];
-    [UIView setAnimationDuration:1.0f];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:self.englishLabel cache:YES];
-    [UIView commitAnimations];
+    [UIView transitionWithView:self.englishLabel duration:1 options:UIViewAnimationOptionTransitionCurlDown|UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.englishLabel.text = @"old english";
+    } completion:^(BOOL isfinished){
+        if (isfinished == YES)
+        {
+        }
+        else
+        {
+        }
+    }];
     
-    self.englishLabel.text = @"new english";
-}
-
-- (void)swipeForwardChinese:(id)sender
-{
-    [UIView beginAnimations:@"animation" context:nil];
-    [UIView setAnimationDuration:1.0f];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:self.chineseLable cache:YES];
-    [UIView commitAnimations];
-    
-    self.chineseLable.text = @"new chinese";
-}
-
-- (void)swipeBackwardEnglish:(id)sender
-{
-    [UIView beginAnimations:@"animation" context:nil];
-    [UIView setAnimationDuration:1.0f];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:self.englishLabel cache:YES];
-    self.englishLabel.text = @"old english";
-    [UIView commitAnimations];
-}
-
-- (void)swipeBackwardChinese:(id)sender
-{
-    [UIView beginAnimations:@"animation" context:nil];
-    [UIView setAnimationDuration:1.0f];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:self.chineseLable cache:YES];
-    self.chineseLable.text = @"old chinese";
-    [UIView commitAnimations];
+    [UIView transitionWithView:self.chineseLable duration:1 options:UIViewAnimationOptionTransitionCurlDown|UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.chineseLable.text = @"old chinese";
+    } completion:^(BOOL isfinished){
+        if (isfinished == YES)
+        {
+        }
+        else
+        {
+        }
+    }];
 }
 
 - (IBAction)doubleTap:(id)sender
