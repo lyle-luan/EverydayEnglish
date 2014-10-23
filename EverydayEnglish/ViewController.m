@@ -37,6 +37,14 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
     [super viewDidLoad];
     self.kbSizeOriginal = CGSizeZero;
     self.updateMessageTextField.delegate = self;
+    NSString *sourceTxtPath = [NSString stringWithFormat:@"%@/source.txt", [[NSBundle mainBundle] resourcePath]];
+    NSLog(@"sourcePTxtPath:%@", sourceTxtPath);
+    
+    NSString *sourceTxtContent = [NSString stringWithContentsOfFile:sourceTxtPath encoding:NSUTF8StringEncoding error:nil];
+    NSLog(@"sourceTxtContent:%@", sourceTxtContent);
+    
+    //读取整个文件太浪费内存了，怎么分片读取勒。
+    
 //    NSArray *ducumentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 //    NSString *documentDirectory = ducumentPaths.firstObject;
 //    NSFileManager *fileManager = [NSFileManager defaultManager];
