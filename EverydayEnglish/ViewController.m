@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "TxTFactory.h"
 
 typedef enum ORIENTATION
 {
@@ -27,6 +28,7 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
 @property (weak, nonatomic) IBOutlet UILabel *chineseLable;
 @property (weak, nonatomic) IBOutlet UITextField *updateMessageTextField;
 @property (nonatomic) CGSize kbSizeOriginal;
+@property (nonatomic, readwrite) TxTFactory *txtFactoryInstance;
 
 @end
 
@@ -37,11 +39,8 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
     [super viewDidLoad];
     self.kbSizeOriginal = CGSizeZero;
     self.updateMessageTextField.delegate = self;
-    NSString *sourceTxtPath = [NSString stringWithFormat:@"%@/source.txt", [[NSBundle mainBundle] resourcePath]];
-    NSLog(@"sourcePTxtPath:%@", sourceTxtPath);
     
-    NSString *sourceTxtContent = [NSString stringWithContentsOfFile:sourceTxtPath encoding:NSUTF8StringEncoding error:nil];
-    NSLog(@"sourceTxtContent:%@", sourceTxtContent);
+    _txtFactoryInstance = [TxTFactory getInstance];
     
     //读取整个文件太浪费内存了，怎么分片读取勒。
     
@@ -79,7 +78,7 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
 - (IBAction)swipeForward:(id)sender
 {
     [UIView transitionWithView:self.englishLabel duration:1 options:UIViewAnimationOptionTransitionCurlUp|UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.englishLabel.text = @"new english";
+        self.englishLabel.text = _txtFactoryInstance.english;
     } completion:^(BOOL isfinished){
         if (isfinished == YES)
         {
@@ -90,7 +89,7 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
     }];
     
     [UIView transitionWithView:self.chineseLable duration:1 options:UIViewAnimationOptionTransitionCurlUp|UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.chineseLable.text = @"new chinese";
+        self.chineseLable.text = _txtFactoryInstance.chinese;
     } completion:^(BOOL isfinished){
         if (isfinished == YES)
         {

@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9319F0DD19F947A50047FA0B /* source.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9319F0DC19F947A50047FA0B /* source.txt */; };
+		9319F0DD19F947A50047FA0B /* source.json in Resources */ = {isa = PBXBuildFile; fileRef = 9319F0DC19F947A50047FA0B /* source.json */; };
+		93F6FC8819FC782A00043B40 /* TxTFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F6FC8719FC782A00043B40 /* TxTFactory.m */; };
 		D638421019DBF416005A2327 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D638420F19DBF416005A2327 /* main.m */; };
 		D638421319DBF416005A2327 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D638421219DBF416005A2327 /* AppDelegate.m */; };
 		D638421619DBF416005A2327 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D638421519DBF416005A2327 /* ViewController.m */; };
@@ -28,7 +29,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9319F0DC19F947A50047FA0B /* source.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = source.txt; sourceTree = "<group>"; };
+		9319F0DC19F947A50047FA0B /* source.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = source.json; sourceTree = "<group>"; };
+		93F6FC8619FC782A00043B40 /* TxTFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TxTFactory.h; sourceTree = "<group>"; };
+		93F6FC8719FC782A00043B40 /* TxTFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TxTFactory.m; sourceTree = "<group>"; };
 		D638420A19DBF416005A2327 /* EverydayEnglish.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EverydayEnglish.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D638420E19DBF416005A2327 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D638420F19DBF416005A2327 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -91,6 +94,8 @@
 				D638421A19DBF416005A2327 /* Images.xcassets */,
 				D638421C19DBF416005A2327 /* LaunchScreen.xib */,
 				D638420D19DBF416005A2327 /* Supporting Files */,
+				93F6FC8619FC782A00043B40 /* TxTFactory.h */,
+				93F6FC8719FC782A00043B40 /* TxTFactory.m */,
 			);
 			path = EverydayEnglish;
 			sourceTree = "<group>";
@@ -100,7 +105,7 @@
 			children = (
 				D638420E19DBF416005A2327 /* Info.plist */,
 				D638420F19DBF416005A2327 /* main.m */,
-				9319F0DC19F947A50047FA0B /* source.txt */,
+				9319F0DC19F947A50047FA0B /* source.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -203,7 +208,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D638421919DBF416005A2327 /* Main.storyboard in Resources */,
-				9319F0DD19F947A50047FA0B /* source.txt in Resources */,
+				9319F0DD19F947A50047FA0B /* source.json in Resources */,
 				D638421E19DBF416005A2327 /* LaunchScreen.xib in Resources */,
 				D638421B19DBF416005A2327 /* Images.xcassets in Resources */,
 			);
@@ -226,6 +231,7 @@
 				D638421619DBF416005A2327 /* ViewController.m in Sources */,
 				D638421319DBF416005A2327 /* AppDelegate.m in Sources */,
 				D638421019DBF416005A2327 /* main.m in Sources */,
+				93F6FC8819FC782A00043B40 /* TxTFactory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
