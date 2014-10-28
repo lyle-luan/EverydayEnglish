@@ -10,8 +10,12 @@
 
 @interface TxTFactory : NSObject
 
-@property (nonatomic, readonly) NSString *english;
-@property (nonatomic, readonly) NSString *chinese;
+- (NSString *)englishForward;
+- (NSString *)chineseForward;
+- (NSString *)englishBackward;
+- (NSString *)chineseBackward;
+- (NSString *)englishOriginal;
+- (NSString *)chineseOriginal;
 
 + (TxTFactory *)getInstance;
 

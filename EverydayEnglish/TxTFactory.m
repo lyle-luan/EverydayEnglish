@@ -10,7 +10,7 @@
 
 @interface TxTFactory()
 
-@property (nonatomic, readonly) NSInteger txtCount;
+@property (nonatomic, readwrite) NSInteger indexTxt;
 @property (nonatomic, readwrite) NSArray *allKeyOfJSON;
 @property (nonatomic, readwrite) id sourceTxtContentJSON;
 @property (nonatomic, readwrite) NSString *currentEnglish;
@@ -18,10 +18,6 @@
 @end
 
 @implementation TxTFactory
-
-@synthesize english;
-@synthesize chinese;
-@synthesize txtCount;
 
 static TxTFactory *txtFactoryInstance = nil;
 
@@ -46,31 +42,52 @@ static TxTFactory *txtFactoryInstance = nil;
     
     _allKeyOfJSON = [_sourceTxtContentJSON allKeys];
     
-    NSString *EnglishContent = nil;
-    for (EnglishContent in _allKeyOfJSON)
-    {
-        NSLog(@"English: %@", EnglishContent);
-        NSLog(@"Chinese: %@", [_sourceTxtContentJSON objectForKey:EnglishContent]);
-    }
+    _indexTxt = 0;
+    _currentEnglish = nil;
 }
 
-- (NSString *)english
+- (NSString *)englishOriginal
 {
-    _currentEnglish = [_allKeyOfJSON objectAtIndex:[txtFactoryInstance txtCount]];
+    _currentEnglish = [_allKeyOfJSON firstObject];
     return _currentEnglish;
+}
+
+- (NSString *)chineseOriginal
+{
+    return [self chinese];
+}
+
+- (NSString *)englishForward
+{
+    _indexTxt = (_indexTxt+1)%[_allKeyOfJSON count];
+    _currentEnglish = [_allKeyOfJSON objectAtIndex:_indexTxt];
+    return _currentEnglish;
+}
+
+- (NSString *)englishBackward
+{
+    _indexTxt = _indexTxt -1;
+    if (_indexTxt < 0)
+    {
+        _indexTxt = [_allKeyOfJSON count] - 1;
+    }
+    _currentEnglish = [_allKeyOfJSON objectAtIndex:_indexTxt];
+    return _currentEnglish;
+}
+
+- (NSString *)chineseForward
+{
+    return [self chinese];
+}
+
+- (NSString *)chineseBackward
+{
+    return [self chinese];
 }
 
 - (NSString *)chinese
 {
-    return [_sourceTxtContentJSON objectForKey:txtFactoryInstance.currentEnglish];
-}
-
-- (NSInteger)txtCount
-{
-    // 从JSON生成数组的时候已经乱序了，所以不需要随机。
-    // 而且本来也没啥顺序。
-    static NSInteger count = 0;
-    return (count++)%[_allKeyOfJSON count];
+    return [_sourceTxtContentJSON objectForKey:_currentEnglish];
 }
 
 + (id)allocWithZone:(struct _NSZone *)zone

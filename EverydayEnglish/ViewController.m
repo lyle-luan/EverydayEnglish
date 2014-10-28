@@ -42,6 +42,9 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
     
     _txtFactoryInstance = [TxTFactory getInstance];
     
+    self.englishLabel.text = _txtFactoryInstance.englishOriginal;
+    self.chineseLable.text = _txtFactoryInstance.chineseOriginal;
+
     //读取整个文件太浪费内存了，怎么分片读取勒。
     
 //    NSArray *ducumentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -78,7 +81,7 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
 - (IBAction)swipeForward:(id)sender
 {
     [UIView transitionWithView:self.englishLabel duration:1 options:UIViewAnimationOptionTransitionCurlUp|UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.englishLabel.text = _txtFactoryInstance.english;
+        self.englishLabel.text = _txtFactoryInstance.englishForward;
     } completion:^(BOOL isfinished){
         if (isfinished == YES)
         {
@@ -89,7 +92,7 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
     }];
     
     [UIView transitionWithView:self.chineseLable duration:1 options:UIViewAnimationOptionTransitionCurlUp|UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.chineseLable.text = _txtFactoryInstance.chinese;
+        self.chineseLable.text = _txtFactoryInstance.chineseForward;
     } completion:^(BOOL isfinished){
         if (isfinished == YES)
         {
@@ -103,7 +106,7 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
 - (IBAction)swipeBackward:(id)sender
 {
     [UIView transitionWithView:self.englishLabel duration:1 options:UIViewAnimationOptionTransitionCurlDown|UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.englishLabel.text = @"old english";
+        self.englishLabel.text = _txtFactoryInstance.englishBackward;
     } completion:^(BOOL isfinished){
         if (isfinished == YES)
         {
@@ -114,7 +117,7 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
     }];
     
     [UIView transitionWithView:self.chineseLable duration:1 options:UIViewAnimationOptionTransitionCurlDown|UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.chineseLable.text = @"old chinese";
+        self.chineseLable.text = _txtFactoryInstance.chineseBackward;
     } completion:^(BOOL isfinished){
         if (isfinished == YES)
         {
