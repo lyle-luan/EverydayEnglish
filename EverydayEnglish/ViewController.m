@@ -44,6 +44,8 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
     
     self.englishLabel.text = _txtFactoryInstance.englishOriginal;
     self.chineseLable.text = _txtFactoryInstance.chineseOriginal;
+    
+    self.view.userInteractionEnabled = YES;
 
     //读取整个文件太浪费内存了，怎么分片读取勒。
     
@@ -140,6 +142,16 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
     [self.updateMessageTextField resignFirstResponder];
 }
 
+- (IBAction)spellEnglish:(id)sender
+{
+    NSLog(@"spellEnglish");
+}
+
+- (IBAction)spellChinese:(id)sender
+{
+    NSLog(@"spellChinese");
+}
+
 - (void)animationUpdateMessageTextFieldWithConstant:(CGFloat)anConstant withDuration:(NSTimeInterval)anDuration
 {
     //UIKeyboardAnimationDurationUserInfoKey，用来改变键盘弹出时间，使键盘和textfield同时出现？
@@ -153,7 +165,6 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
         }
         else
         {
-            NSLog(@"TODO://");
         }
     }];
 }
@@ -165,7 +176,6 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
         if (constraint.firstItem == aUIView && constraint.firstAttribute == anAttribute)
         {
             constraint.constant = anConstant;
-            NSLog(@"move view");
         }
     }
 }
@@ -197,7 +207,7 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
     CGSize kbSizeNow = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     if (CGSizeEqualToSize(self.kbSizeOriginal, CGSizeZero))
     {
-        NSLog(@"show");
+        //SHOW
         [self animationUpdateMessageTextFieldWithConstant:-(kbSizeNow.height) withDuration:kbSizeNow.height/KEYBOARD_HEIGHT_MAX];
         [self.updateMessageTextField becomeFirstResponder];
         
@@ -207,14 +217,12 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
     }
     else if (CGSizeEqualToSize(self.kbSizeOriginal, kbSizeNow) == YES)
     {
-        NSLog(@"hide");
-        
+        //HIDE
         self.kbSizeOriginal = CGSizeZero;
     }
     else
     {
-        NSLog(@"change");
-        
+        //CHANGE
         if (self.kbSizeOriginal.height > kbSizeNow.height)
         {
             [self animationUpdateMessageTextFieldWithConstant:-(kbSizeNow.height) withDuration:kbSizeNow.height/KEYBOARD_HEIGHT_MAX];
