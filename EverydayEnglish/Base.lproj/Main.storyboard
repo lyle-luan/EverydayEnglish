@@ -31,7 +31,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="中文" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41a-uS-QAL" userLabel="chineseButton">
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="中文" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41a-uS-QAL" userLabel="chineseSpellLabel">
                                 <rect key="frame" x="0.0" y="300" width="600" height="150"/>
                                 <color key="backgroundColor" red="0.93333333333333335" green="0.60392156862745094" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
@@ -42,7 +42,7 @@
                                     <outletCollection property="gestureRecognizers" destination="6mH-ql-6lu" appends="YES" id="Iw2-am-MVZ"/>
                                 </connections>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zlz-7f-vCT" userLabel="englishButton">
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zlz-7f-vCT" userLabel="englishSpellLabel">
                                 <rect key="frame" x="0.0" y="450" width="600" height="100"/>
                                 <color key="backgroundColor" red="0.95686274509803926" green="0.79607843137254897" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
@@ -50,12 +50,12 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="hpl-V8-icO" appends="YES" id="qbU-ta-Bmk"/>
+                                    <outletCollection property="gestureRecognizers" destination="hpl-V8-icO" appends="YES" id="Vg2-lR-V6L"/>
                                 </connections>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="what you want" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="VwG-r1-nKR" userLabel="updateMessageTextFiled">
                                 <rect key="frame" x="0.0" y="550" width="600" height="50"/>
-                                <color key="backgroundColor" red="0.71372549019607845" green="0.72156862745098038" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.40784313725490196" green="0.5725490196078431" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="yes" spellCheckingType="yes" returnKeyType="send"/>
                                 <connections>
@@ -109,13 +109,12 @@
                             <outletCollection property="gestureRecognizers" destination="US3-pO-WIK" appends="YES" id="1bH-2E-OGN"/>
                             <outletCollection property="gestureRecognizers" destination="toW-72-2Ac" appends="YES" id="rLa-pF-Ubs"/>
                             <outletCollection property="gestureRecognizers" destination="pvA-Jl-PPK" appends="YES" id="8ab-is-1Qt"/>
-                            <outletCollection property="gestureRecognizers" destination="ztb-9R-u3I" appends="YES" id="g4n-8T-Vc8"/>
+                            <outletCollection property="gestureRecognizers" destination="ztb-9R-u3I" appends="YES" id="xLp-3G-ecC"/>
                         </connections>
                     </view>
                     <connections>
                         <outlet property="chineseLable" destination="rxr-21-0An" id="rhn-6F-NfO"/>
                         <outlet property="englishLabel" destination="xNu-bP-WNS" id="TPL-Qf-NmN"/>
-                        <outlet property="somethingAboutMeLable" destination="Xlu-87-5hB" id="Gew-H4-W2P"/>
                         <outlet property="updateMessageTextField" destination="VwG-r1-nKR" id="ytb-GT-hkV"/>
                     </connections>
                 </viewController>
@@ -147,7 +146,7 @@
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="ztb-9R-u3I" userLabel="resignFirstResponderTextField">
                     <connections>
-                        <action selector="updateMessage:" destination="BYZ-38-t0r" id="tRg-zF-k3e"/>
+                        <action selector="updateMessage:" destination="BYZ-38-t0r" id="xEV-Aj-Yv1"/>
                     </connections>
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="hpl-V8-icO" userLabel="spellEnglish">

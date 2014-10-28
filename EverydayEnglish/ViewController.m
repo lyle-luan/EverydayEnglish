@@ -23,7 +23,6 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
 
 @interface ViewController () <UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *somethingAboutMeLable;
 @property (weak, nonatomic) IBOutlet UILabel *englishLabel;
 @property (weak, nonatomic) IBOutlet UILabel *chineseLable;
 @property (weak, nonatomic) IBOutlet UITextField *updateMessageTextField;
