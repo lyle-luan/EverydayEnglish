@@ -284,12 +284,36 @@ static NSString * const NO_CHINESE_SOUND        = @"onChineseSound";
 {
     if ((_audioPlayer != nil) && (_audioPlayer.playing == YES))
     {
-        //make it elegant
-        [_audioPlayer stop];
+        CGFloat time = 0.1;
+        CGFloat leftTime = _audioPlayer.duration-_audioPlayer.currentTime;
+
+        if (leftTime < time*5)
+        {
+            leftTime /= 5;
+        }
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(time * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            _audioPlayer.volume *= 0.618;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(time * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                _audioPlayer.volume *= 0.618;
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(time * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    _audioPlayer.volume *= 0.618;
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(time * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        _audioPlayer.volume *= 0.618;
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(time * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                            _audioPlayer.volume *= 0.618;
+                            [_audioPlayer stop];
+                        });
+                    });
+                });
+            });
+        });
+        
         return YES;
     }
     else
     {
+        _audioPlayer.volume = 1;
         return NO;
     }
 }
