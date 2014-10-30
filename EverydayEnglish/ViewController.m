@@ -22,8 +22,10 @@ typedef enum ORIENTATION
     SLIDE_DOWN,
 }SLIDE_ORIENTATION;
 
-static const CGFloat KEYBOARD_HEIGHT_MAX      = 270.0f;
-static const NSInteger TEXTFILED_LEN_MAX      = 100;
+static const CGFloat KEYBOARD_HEIGHT_MAX        = 270.0f;
+static const NSInteger TEXTFILED_LEN_MAX        = 100;
+static NSString * const NO_ENGLISH_SOUND        = @"onEnglishSound";
+static NSString * const NO_CHINESE_SOUND        = @"onChineseSound";
 
 @interface ViewController () <UITextFieldDelegate, AVAudioPlayerDelegate>
 
@@ -156,27 +158,41 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
 
 - (IBAction)spellEnglish:(id)sender
 {
-    [self tryToStopSound];
-    
-    NSError *error;
-    NSString *soundFile = [NSString stringWithFormat:@"%@/test.mp3", [[NSBundle mainBundle] resourcePath]];
-    _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:soundFile] error:&error];
-    _audioPlayer.delegate = self;
-    
-    [_audioPlayer play];
-    
+    if ([self tryToStopSound] == NO)
+    {
+        NSError *error;
+        NSString *soundFile = [NSString stringWithFormat:@"%@/%@.mp3", [[NSBundle mainBundle] resourcePath], _englishLabel.text];
+        if (soundFile == nil)
+        {
+            soundFile = [NSString stringWithFormat:@"%@/%@.mp3", [[NSBundle mainBundle] resourcePath], NO_ENGLISH_SOUND];
+        }
+        if (soundFile != nil)
+        {
+            _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:soundFile] error:&error];
+            _audioPlayer.delegate = self;
+            [_audioPlayer play];
+        }
+    }
 }
 
 - (IBAction)spellChinese:(id)sender
 {
-    [self tryToStopSound];
-    
-    NSError *error;
-    NSString *soundFile = [NSString stringWithFormat:@"%@/key-01.mp3", [[NSBundle mainBundle] resourcePath]];
-    _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:soundFile] error:&error];
-    _audioPlayer.delegate = self;
-    
-    [_audioPlayer play];
+    if ([self tryToStopSound] == NO)
+    {
+        NSError *error;
+        NSString *soundFile = [NSString stringWithFormat:@"%@/%@.mp3", [[NSBundle mainBundle] resourcePath], _chineseLable.text];
+        if (soundFile == nil)
+        {
+            soundFile = [NSString stringWithFormat:@"%@/%@.mp3", [[NSBundle mainBundle] resourcePath], NO_CHINESE_SOUND];
+        }
+        if (soundFile != nil)
+        {
+            _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:soundFile] error:&error];
+            _audioPlayer.delegate = self;
+            
+            [_audioPlayer play];
+        }
+    }
 }
 
 - (void)animationUpdateMessageTextFieldWithConstant:(CGFloat)anConstant withDuration:(NSTimeInterval)anDuration
@@ -264,12 +280,17 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
     }
 }
 
-- (void)tryToStopSound
+- (BOOL)tryToStopSound
 {
     if ((_audioPlayer != nil) && (_audioPlayer.playing == YES))
     {
         //make it elegant
         [_audioPlayer stop];
+        return YES;
+    }
+    else
+    {
+        return NO;
     }
 }
 
