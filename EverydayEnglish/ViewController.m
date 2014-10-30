@@ -8,6 +8,10 @@
 
 #import "ViewController.h"
 #import "TxTFactory.h"
+#import <AVFoundation/AVFoundation.h>
+
+//@import MediaPlayer;
+//@import AVFoundation;
 
 typedef enum ORIENTATION
 {
@@ -21,13 +25,14 @@ typedef enum ORIENTATION
 static const CGFloat KEYBOARD_HEIGHT_MAX      = 270.0f;
 static const NSInteger TEXTFILED_LEN_MAX      = 100;
 
-@interface ViewController () <UITextFieldDelegate>
+@interface ViewController () <UITextFieldDelegate, AVAudioPlayerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *englishLabel;
 @property (weak, nonatomic) IBOutlet UILabel *chineseLable;
 @property (weak, nonatomic) IBOutlet UITextField *updateMessageTextField;
 @property (nonatomic) CGSize kbSizeOriginal;
 @property (nonatomic, readwrite) TxTFactory *txtFactoryInstance;
+@property (nonatomic, strong) AVAudioPlayer *audioPlayer;
 
 @end
 
@@ -45,7 +50,8 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
     self.chineseLable.text = _txtFactoryInstance.chineseOriginal;
     
     self.view.userInteractionEnabled = YES;
-
+    
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     //读取整个文件太浪费内存了，怎么分片读取勒。
     
 //    NSArray *ducumentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -71,6 +77,7 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
 {
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChangeFrame:) name:UIKeyboardDidChangeFrameNotification object:nil];
+    _audioPlayer = nil;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -81,6 +88,8 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
 
 - (IBAction)swipeForward:(id)sender
 {
+    [self tryToStopSound];
+    
     [UIView transitionWithView:self.englishLabel duration:1 options:UIViewAnimationOptionTransitionCurlUp|UIViewAnimationOptionCurveEaseInOut animations:^{
         self.englishLabel.text = _txtFactoryInstance.englishForward;
     } completion:^(BOOL isfinished){
@@ -106,6 +115,8 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
 
 - (IBAction)swipeBackward:(id)sender
 {
+    [self tryToStopSound];
+    
     [UIView transitionWithView:self.englishLabel duration:1 options:UIViewAnimationOptionTransitionCurlDown|UIViewAnimationOptionCurveEaseInOut animations:^{
         self.englishLabel.text = _txtFactoryInstance.englishBackward;
     } completion:^(BOOL isfinished){
@@ -117,7 +128,7 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
         }
     }];
     
-    [UIView transitionWithView:self.chineseLable duration:1 options:UIViewAnimationOptionTransitionCurlDown|UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView transitionWithView:self.chineseLable duration:0.8 options:UIViewAnimationOptionTransitionCurlDown|UIViewAnimationOptionCurveEaseInOut animations:^{
         self.chineseLable.text = _txtFactoryInstance.chineseBackward;
     } completion:^(BOOL isfinished){
         if (isfinished == YES)
@@ -131,6 +142,8 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
 
 - (IBAction)doubleTap:(id)sender
 {
+    [self tryToStopSound];
+    
     [self animationUpdateMessageTextFieldWithConstant:-KEYBOARD_HEIGHT_MAX withDuration:1];
     [self.updateMessageTextField becomeFirstResponder];
 }
@@ -143,12 +156,27 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
 
 - (IBAction)spellEnglish:(id)sender
 {
-    NSLog(@"spellEnglish");
+    [self tryToStopSound];
+    
+    NSError *error;
+    NSString *soundFile = [NSString stringWithFormat:@"%@/test.mp3", [[NSBundle mainBundle] resourcePath]];
+    _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:soundFile] error:&error];
+    _audioPlayer.delegate = self;
+    
+    [_audioPlayer play];
+    
 }
 
 - (IBAction)spellChinese:(id)sender
 {
-    NSLog(@"spellChinese");
+    [self tryToStopSound];
+    
+    NSError *error;
+    NSString *soundFile = [NSString stringWithFormat:@"%@/key-01.mp3", [[NSBundle mainBundle] resourcePath]];
+    _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:soundFile] error:&error];
+    _audioPlayer.delegate = self;
+    
+    [_audioPlayer play];
 }
 
 - (void)animationUpdateMessageTextFieldWithConstant:(CGFloat)anConstant withDuration:(NSTimeInterval)anDuration
@@ -234,6 +262,25 @@ static const NSInteger TEXTFILED_LEN_MAX      = 100;
         
         self.kbSizeOriginal = kbSizeNow;
     }
+}
+
+- (void)tryToStopSound
+{
+    if ((_audioPlayer != nil) && (_audioPlayer.playing == YES))
+    {
+        //make it elegant
+        [_audioPlayer stop];
+    }
+}
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    NSLog(@"finished");
+}
+
+- (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error
+{
+    NSLog(@"error");
 }
 
 - (void)didReceiveMemoryWarning
