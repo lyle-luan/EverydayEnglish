@@ -10,9 +10,6 @@
 #import "TxTFactory.h"
 #import <AVFoundation/AVFoundation.h>
 
-//@import MediaPlayer;
-//@import AVFoundation;
-
 typedef enum ORIENTATION
 {
     SLIDE_NO = 0,
@@ -26,6 +23,7 @@ static const CGFloat KEYBOARD_HEIGHT_MAX        = 270.0f;
 static const NSInteger TEXTFILED_LEN_MAX        = 100;
 static NSString * const NO_ENGLISH_SOUND        = @"onEnglishSound";
 static NSString * const NO_CHINESE_SOUND        = @"onChineseSound";
+static const CGFloat GOOD_SPEECH_RATE           = 0.3f;
 
 @interface ViewController () <UITextFieldDelegate, AVAudioPlayerDelegate>
 
@@ -34,7 +32,9 @@ static NSString * const NO_CHINESE_SOUND        = @"onChineseSound";
 @property (weak, nonatomic) IBOutlet UITextField *updateMessageTextField;
 @property (nonatomic) CGSize kbSizeOriginal;
 @property (nonatomic, readwrite) TxTFactory *txtFactoryInstance;
-@property (nonatomic, strong) AVAudioPlayer *audioPlayer;
+@property (nonatomic, strong) AVSpeechSynthesizer *speechSynth;
+@property (nonatomic) AVSpeechSynthesisVoice *chineseVoice;
+@property (nonatomic) AVSpeechSynthesisVoice *englishVoice;
 
 @end
 
@@ -52,6 +52,12 @@ static NSString * const NO_CHINESE_SOUND        = @"onChineseSound";
     self.chineseLable.text = _txtFactoryInstance.chineseOriginal;
     
     self.view.userInteractionEnabled = YES;
+    
+     _chineseVoice = self.chineseVoice;
+     _englishVoice = self.englishVoice;
+    
+     _speechSynth = [[AVSpeechSynthesizer alloc] init];
+
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     //读取整个文件太浪费内存了，怎么分片读取勒。
@@ -79,7 +85,6 @@ static NSString * const NO_CHINESE_SOUND        = @"onChineseSound";
 {
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChangeFrame:) name:UIKeyboardDidChangeFrameNotification object:nil];
-    _audioPlayer = nil;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -90,7 +95,7 @@ static NSString * const NO_CHINESE_SOUND        = @"onChineseSound";
 
 - (IBAction)swipeForward:(id)sender
 {
-    [self tryToStopSound];
+    [self stopSound];
     
     [UIView transitionWithView:self.englishLabel duration:1 options:UIViewAnimationOptionTransitionCurlUp|UIViewAnimationOptionCurveEaseInOut animations:^{
         self.englishLabel.text = _txtFactoryInstance.englishForward;
@@ -117,7 +122,7 @@ static NSString * const NO_CHINESE_SOUND        = @"onChineseSound";
 
 - (IBAction)swipeBackward:(id)sender
 {
-    [self tryToStopSound];
+    [self stopSound];
     
     [UIView transitionWithView:self.englishLabel duration:1 options:UIViewAnimationOptionTransitionCurlDown|UIViewAnimationOptionCurveEaseInOut animations:^{
         self.englishLabel.text = _txtFactoryInstance.englishBackward;
@@ -144,7 +149,7 @@ static NSString * const NO_CHINESE_SOUND        = @"onChineseSound";
 
 - (IBAction)doubleTap:(id)sender
 {
-    [self tryToStopSound];
+    [self stopSound];
     
     [self animationUpdateMessageTextFieldWithConstant:-KEYBOARD_HEIGHT_MAX withDuration:1];
     [self.updateMessageTextField becomeFirstResponder];
@@ -158,40 +163,43 @@ static NSString * const NO_CHINESE_SOUND        = @"onChineseSound";
 
 - (IBAction)spellEnglish:(id)sender
 {
-    if ([self tryToStopSound] == NO)
+    if ([self stopSound] == NO)
     {
-        NSError *error;
-        NSString *soundFile = [NSString stringWithFormat:@"%@/%@.mp3", [[NSBundle mainBundle] resourcePath], _englishLabel.text];
-        if (soundFile == nil)
+        AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString:_englishLabel.text];
+        
+        if (utterance != nil)
         {
-            soundFile = [NSString stringWithFormat:@"%@/%@.mp3", [[NSBundle mainBundle] resourcePath], NO_ENGLISH_SOUND];
+            utterance.rate = GOOD_SPEECH_RATE;
+            
+            if (_englishVoice != nil)
+            {
+                utterance.voice = _englishVoice;
+                
+                [_speechSynth speakUtterance:utterance];
+            }
         }
-        if (soundFile != nil)
-        {
-            _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:soundFile] error:&error];
-            _audioPlayer.delegate = self;
-            [_audioPlayer play];
-        }
+        // TODO:ERROR
     }
 }
 
 - (IBAction)spellChinese:(id)sender
 {
-    if ([self tryToStopSound] == NO)
+    if ([self stopSound] == NO)
     {
-        NSError *error;
-        NSString *soundFile = [NSString stringWithFormat:@"%@/%@.mp3", [[NSBundle mainBundle] resourcePath], _chineseLable.text];
-        if (soundFile == nil)
+        AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString:_chineseLable.text];
+        
+        if (utterance != nil)
         {
-            soundFile = [NSString stringWithFormat:@"%@/%@.mp3", [[NSBundle mainBundle] resourcePath], NO_CHINESE_SOUND];
-        }
-        if (soundFile != nil)
-        {
-            _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:soundFile] error:&error];
-            _audioPlayer.delegate = self;
+            utterance.rate = GOOD_SPEECH_RATE;
             
-            [_audioPlayer play];
+            if (_chineseVoice != nil)
+            {
+                utterance.voice = _chineseVoice;
+                
+                [_speechSynth speakUtterance:utterance];
+            }
         }
+        // TODO:ERROR
     }
 }
 
@@ -280,40 +288,18 @@ static NSString * const NO_CHINESE_SOUND        = @"onChineseSound";
     }
 }
 
-- (BOOL)tryToStopSound
+- (BOOL)stopSound
 {
-    if ((_audioPlayer != nil) && (_audioPlayer.playing == YES))
+    if ((_speechSynth != nil) && (_speechSynth.speaking == YES))
     {
-        CGFloat time = 0.1;
-        CGFloat leftTime = _audioPlayer.duration-_audioPlayer.currentTime;
-
-        if (leftTime < time*5)
+        if ([_speechSynth stopSpeakingAtBoundary:AVSpeechBoundaryWord] == NO)
         {
-            leftTime /= 5;
+            [_speechSynth stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
         }
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(time * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            _audioPlayer.volume *= 0.618;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(time * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                _audioPlayer.volume *= 0.618;
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(time * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    _audioPlayer.volume *= 0.618;
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(time * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                        _audioPlayer.volume *= 0.618;
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(time * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                            _audioPlayer.volume *= 0.618;
-                            [_audioPlayer stop];
-                        });
-                    });
-                });
-            });
-        });
-        
         return YES;
     }
     else
     {
-        _audioPlayer.volume = 1;
         return NO;
     }
 }
@@ -326,6 +312,18 @@ static NSString * const NO_CHINESE_SOUND        = @"onChineseSound";
 - (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error
 {
     NSLog(@"error");
+}
+
+- (AVSpeechSynthesisVoice *)chineseVoice
+{
+    NSLog(@"chineseVoice");
+    return [AVSpeechSynthesisVoice voiceWithLanguage:@"zh-CN"];
+}
+
+- (AVSpeechSynthesisVoice *)englishVoice
+{
+    NSLog(@"englishVoice");
+    return [AVSpeechSynthesisVoice voiceWithLanguage:@"en-US"];
 }
 
 - (void)didReceiveMemoryWarning

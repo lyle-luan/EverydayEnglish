@@ -1,5 +1,5 @@
 {
-    "English":"中文",
+    "English i get exactly the same error log in the Simulator but I have no problem with the code in either the Simulator or on the iPhone 5 device as you've indicated elsewhere. The difference might be that I'm not using any of those 6 optional AVSpeechSythesizerDelegates and consequently, I have not included it in my class protocol. Hence, to help track your error, you might try it without. Here is my test code, which is logically the same as yours, minus the delegate and any AVSpeechUtterance storage allocation":"中文",
     "Another English":"另一个中文",
     "Third English":"第三个中文",
 }
