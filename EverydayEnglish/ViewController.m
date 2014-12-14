@@ -6,9 +6,10 @@
 //  Copyright (c) 2014年 ll. All rights reserved.
 //
 
+#import <AVFoundation/AVFoundation.h>
 #import "ViewController.h"
 #import "TxTFactory.h"
-#import <AVFoundation/AVFoundation.h>
+#import "EDEHttpManager.h"
 
 typedef enum ORIENTATION
 {
@@ -25,7 +26,7 @@ static NSString * const NO_ENGLISH_SOUND        = @"onEnglishSound";
 static NSString * const NO_CHINESE_SOUND        = @"onChineseSound";
 static const CGFloat GOOD_SPEECH_RATE           = 0.3f;
 
-@interface ViewController () <UITextFieldDelegate, AVAudioPlayerDelegate>
+@interface ViewController () <UITextFieldDelegate, AVAudioPlayerDelegate, EDEHttpManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *englishLabel;
 @property (weak, nonatomic) IBOutlet UILabel *chineseLable;
@@ -329,6 +330,22 @@ static const CGFloat GOOD_SPEECH_RATE           = 0.3f;
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+#pragma EDEHttpManagerDelegate
+- (void)receiveDownloadProgressReport: (float)downloadProgress
+{
+    NSLog(@"downlaoding: %f", downloadProgress);
+}
+
+- (void)downloadDidStart
+{
+    
+}
+
+- (void)downloadDidComplete
+{
+    
 }
 
 @end
