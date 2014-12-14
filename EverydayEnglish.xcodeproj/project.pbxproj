@@ -17,6 +17,7 @@
 		D638421B19DBF416005A2327 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D638421A19DBF416005A2327 /* Images.xcassets */; };
 		D638421E19DBF416005A2327 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D638421C19DBF416005A2327 /* LaunchScreen.xib */; };
 		D638422A19DBF416005A2327 /* EverydayEnglishTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D638422919DBF416005A2327 /* EverydayEnglishTests.m */; };
+		DD4FBA8C1A2C11BC0074B883 /* EDEHttpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DD4FBA8B1A2C11BC0074B883 /* EDEHttpManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,8 @@
 		D638422319DBF416005A2327 /* EverydayEnglishTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EverydayEnglishTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D638422819DBF416005A2327 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D638422919DBF416005A2327 /* EverydayEnglishTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EverydayEnglishTests.m; sourceTree = "<group>"; };
+		DD4FBA8A1A2C11BC0074B883 /* EDEHttpManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDEHttpManager.h; sourceTree = "<group>"; };
+		DD4FBA8B1A2C11BC0074B883 /* EDEHttpManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDEHttpManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,12 +97,14 @@
 				D638421219DBF416005A2327 /* AppDelegate.m */,
 				D638421419DBF416005A2327 /* ViewController.h */,
 				D638421519DBF416005A2327 /* ViewController.m */,
+				93F6FC8619FC782A00043B40 /* TxTFactory.h */,
+				93F6FC8719FC782A00043B40 /* TxTFactory.m */,
+				DD4FBA8A1A2C11BC0074B883 /* EDEHttpManager.h */,
+				DD4FBA8B1A2C11BC0074B883 /* EDEHttpManager.m */,
 				D638421719DBF416005A2327 /* Main.storyboard */,
 				D638421A19DBF416005A2327 /* Images.xcassets */,
 				D638421C19DBF416005A2327 /* LaunchScreen.xib */,
 				D638420D19DBF416005A2327 /* Supporting Files */,
-				93F6FC8619FC782A00043B40 /* TxTFactory.h */,
-				93F6FC8719FC782A00043B40 /* TxTFactory.m */,
 			);
 			path = EverydayEnglish;
 			sourceTree = "<group>";
@@ -236,6 +241,7 @@
 				D638421619DBF416005A2327 /* ViewController.m in Sources */,
 				D638421319DBF416005A2327 /* AppDelegate.m in Sources */,
 				D638421019DBF416005A2327 /* main.m in Sources */,
+				DD4FBA8C1A2C11BC0074B883 /* EDEHttpManager.m in Sources */,
 				93F6FC8819FC782A00043B40 /* TxTFactory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
