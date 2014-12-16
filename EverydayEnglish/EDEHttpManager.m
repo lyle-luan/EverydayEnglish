@@ -619,9 +619,6 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
         _tmpPath = NSTemporaryDirectory();
         _resumeDataFileCreatedByCancel = [_tmpPath stringByAppendingPathComponent:RESUME_DATA_FILE_NAME];
         
-        _sesstion = [self backgroundSesstion];
-        _downloadTask = [_sesstion downloadTaskWithURL:[NSURL URLWithString:DOWNLOAD_URL_STRING]];
-        
         _backgroundQueue = dispatch_queue_create(SERIAL_QUEUE_LABLE, DISPATCH_QUEUE_SERIAL);
         
         _backgroundEvent = nil;
@@ -666,6 +663,9 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
         NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
         _backgroundDownloadQueueIdentifier = [bundleId stringByAppendingString:backgroundDownloadQueueIdentifier_SUFFIX];
         _backgroundSessionConfigurationIdentifier = [bundleId stringByAppendingString:backgroundSessionConfigurationIdentifier_SUFFIX];
+        
+        _sesstion = [self backgroundSesstion];
+        _downloadTask = [_sesstion downloadTaskWithURL:[NSURL URLWithString:DOWNLOAD_URL_STRING]];
     }
     return self;
 }
