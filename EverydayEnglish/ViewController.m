@@ -327,10 +327,30 @@ static const CGFloat GOOD_SPEECH_RATE           = 0.3f;
     return [AVSpeechSynthesisVoice voiceWithLanguage:@"en-US"];
 }
 
-- (void)didReceiveMemoryWarning
+
+- (IBAction)buttonPushed:(id)sender
 {
-    [super didReceiveMemoryWarning];
+    UIButton *button = (UIButton *)sender;
+    if ([button.titleLabel.text isEqual:@"Start"])
+    {
+        [button setTitle:@"Stop" forState:UIControlStateNormal];
+        [EDEHttpManager startDownload];
+    }
+    else if ([button.titleLabel.text isEqual:@"Stop"])
+    {
+        [button setTitle:@"Start" forState:UIControlStateNormal];
+        [EDEHttpManager stopDownload];
+    }
+    else
+    {
+        [button setTitle:@"Start" forState:UIControlStateNormal];
+    }
 }
+
+
+
+
+
 
 #pragma EDEHttpManagerDelegate
 - (void)receiveDownloadProgressReport: (float)downloadProgress

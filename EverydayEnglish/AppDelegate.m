@@ -50,8 +50,8 @@
     NSString *logPath = [documentsDirectory stringByAppendingPathComponent:@"console_log.txt"];
     NSLog(@"%@", logPath);
     
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    [fileManager removeItemAtPath:logPath error:nil];
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    [fileManager removeItemAtPath:logPath error:nil];
     
     freopen([logPath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
 }

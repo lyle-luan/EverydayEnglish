@@ -32,7 +32,7 @@ static NSString * const DOWNLOAD_URL_STRING         = @"http://localhost/downloa
 static const char* const SERIAL_QUEUE_LABLE         = "com.EverydayEnglish.serialQueue";
 
 static NSString * const RESUME_DATA_KEY_NSURLSessionResumeInfoLocalPath     = @"NSURLSessionResumeInfoLocalPath";
-static NSString * const backgroundSessionConfigurationIdentifier_SUFFIX     = @"231312rsssssdfasfas*******fsfasfsa789789fasound234";
+static NSString * const backgroundSessionConfigurationIdentifier_SUFFIX     = @"231312rs123434d234";
 static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"backgroundDownloadQueue";
 
 @implementation EDEHttpManager
@@ -40,6 +40,7 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
 + (void)continueDownload
 {
     [[EDEHttpManager getInstance] tryContinueDownload];
+//    [EDEHttpManager startDownload];
 }
 
 + (void)backUpDownload
@@ -127,7 +128,14 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
         if (NO == [[NSFileManager defaultManager] fileExistsAtPath:weakSelf.resumeDataFileCreatedByCancel])
         {
             NSLog(@"-----------start-----------");
-            [weakSelf.downloadTask resume];
+            [weakSelf.sesstion getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
+                NSURLSessionDownloadTask *downloadTaskBefore = downloadTasks.firstObject;
+                if ((downloadTaskBefore == nil) || (downloadTaskBefore.countOfBytesExpectedToReceive == 0))
+                {
+                    weakSelf.downloadTask = weakSelf.downloadTask = [weakSelf.sesstion downloadTaskWithURL:[NSURL URLWithString:DOWNLOAD_URL_STRING]];
+                    [weakSelf.downloadTask resume];
+                }
+            }];
         }
         else
         {
@@ -140,6 +148,8 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
             [fileHandler closeFile];
             
             [weakSelf.downloadTask resume];
+            
+            //TODO: 清除resumeData文件。
         }
     });
 }
@@ -665,7 +675,6 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
         _backgroundSessionConfigurationIdentifier = [bundleId stringByAppendingString:backgroundSessionConfigurationIdentifier_SUFFIX];
         
         _sesstion = [self backgroundSesstion];
-        _downloadTask = [_sesstion downloadTaskWithURL:[NSURL URLWithString:DOWNLOAD_URL_STRING]];
     }
     return self;
 }
@@ -761,13 +770,10 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
             {
                 //cause by - (void)stopInstance
             }
-            else if ([error.userInfo[NSURLErrorBackgroundTaskCancelledReasonKey] isEqualToNumber: [NSNumber numberWithInteger: NSURLErrorCancelledReasonUserForceQuitApplication]])
+            else if ([error.userInfo objectForKey:NSURLSessionDownloadTaskResumeData] != nil)
             {
-                if ([error.userInfo objectForKey:NSURLSessionDownloadTaskResumeData] != nil)
-                {
-                    _storeResumeData([error.userInfo objectForKey:NSURLSessionDownloadTaskResumeData]);
-                    [self startInstance];
-                }
+                _storeResumeData([error.userInfo objectForKey:NSURLSessionDownloadTaskResumeData]);
+                [self startInstance];
             }
         }
     }
