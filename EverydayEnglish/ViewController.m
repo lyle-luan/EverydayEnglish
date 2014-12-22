@@ -307,23 +307,19 @@ static const CGFloat GOOD_SPEECH_RATE           = 0.3f;
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {
-    NSLog(@"finished");
 }
 
 - (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error
 {
-    NSLog(@"error");
 }
 
 - (AVSpeechSynthesisVoice *)chineseVoice
 {
-    NSLog(@"chineseVoice");
     return [AVSpeechSynthesisVoice voiceWithLanguage:@"zh-CN"];
 }
 
 - (AVSpeechSynthesisVoice *)englishVoice
 {
-    NSLog(@"englishVoice");
     return [AVSpeechSynthesisVoice voiceWithLanguage:@"en-US"];
 }
 
@@ -355,7 +351,6 @@ static const CGFloat GOOD_SPEECH_RATE           = 0.3f;
 #pragma EDEHttpManagerDelegate
 - (void)receiveDownloadProgressReport: (float)downloadProgress
 {
-    NSLog(@"downlaoding: %f", downloadProgress);
 }
 
 - (void)downloadDidStart

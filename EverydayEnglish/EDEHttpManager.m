@@ -56,10 +56,8 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
     //You can also pop up a local notification to remind the user
     //...
     
-    NSLog(@"handleEventsForBackgroundURLSession:%@", identifier);
     if (NO == [identifier isEqualToString:[EDEHttpManager getInstance].backgroundSessionConfigurationIdentifier])
     {
-        NSLog(@"not the same indentifier");
     }
     else
     {
@@ -82,7 +80,6 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
     static EDEHttpManager *instanceEDEHttpManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSLog(@"EDEHttpManager new");
         instanceEDEHttpManager = [[super allocWithZone:nil] init];
     });
     return instanceEDEHttpManager;
@@ -99,7 +96,6 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
         }
         else
         {
-            NSLog(@"tryContinueDownload no tmp path");
         }
     }
 }
@@ -115,7 +111,6 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
         }
         else
         {
-            NSLog(@"tryBackUpDownload no persistence path");
         }
     }
 }
@@ -127,7 +122,6 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
     dispatch_async(_backgroundQueue, ^{
         if (NO == [[NSFileManager defaultManager] fileExistsAtPath:weakSelf.resumeDataFileCreatedByCancel])
         {
-            NSLog(@"-----------start-----------");
             [weakSelf.sesstion getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
                 NSURLSessionDownloadTask *downloadTaskBefore = downloadTasks.firstObject;
                 if ((downloadTaskBefore == nil) || (downloadTaskBefore.countOfBytesExpectedToReceive == 0))
@@ -139,7 +133,6 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
         }
         else
         {
-            NSLog(@"-----------resum-----------");
             //TODO: 这部分也可以放到init中，这样startInstance就只用调用resume就可以了。
             //TODO: dispatch_sync read data, necessary? already in background
             NSFileHandle *fileHandler = [NSFileHandle fileHandleForReadingAtPath:weakSelf.resumeDataFileCreatedByCancel];
@@ -158,9 +151,6 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
 {
     if ([self isNeedCancel])
     {
-        NSLog(@"-----------stop-----------");
-        
-        
         [_downloadTask cancelByProducingResumeData:_storeResumeData];
         //TODO: maybe [判断tmp目录下有没有从download目录下拷贝过来的download.tmp文件](可以使用filemanager，或者使用KVO更好点)，如果没有，去download目录内拷贝到tmp中。但是感觉不是很必要。
     }
@@ -205,7 +195,6 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
     //TODO: specific attributes blew
     if (NO == [filemanager createDirectoryAtPath:_tmpPath withIntermediateDirectories:YES attributes:nil error:nil])
     {
-        NSLog(@"can't create tmp path");
         return NO;
     }
     return YES;
@@ -233,7 +222,6 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
     //TODO: specific attributes blew
     if (NO == [filemanager createDirectoryAtPath:_persistencePath withIntermediateDirectories:YES attributes:nil error:nil])
     {
-        NSLog(@"can't create persistence path");
         return NO;
     }
     return YES;
@@ -273,7 +261,6 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
     }
     else
     {
-        NSLog(@"no resumeData according xml: %@", resumeDataPath);
         if (_isBackingUp == YES)
         {
             [self cleanupTmp];
@@ -305,7 +292,6 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
         NSFileManager *filemanager = [NSFileManager defaultManager];
         if (NO == [filemanager moveItemAtPath:sourceFilePath toPath:destinationFilePath error:&error])
         {
-            NSLog(@"copy resumeData error: %@", error);
             if (_isBackingUp == YES)
             {
                 [self cleanupTmp];
@@ -338,24 +324,21 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
     {
         //TODO: 忽略.DS_Store
         NSString *fullFileName = [tempPath stringByAppendingPathComponent:fileName];
-        NSLog(@"cleanupTmp: %@", fullFileName);
         [fileManager removeItemAtPath:fullFileName error:nil];
     }
 }
 
 - (void)cleanupPersistence
 {
-    NSLog(@"cleanupPersistence");
 }
 
 - (void)cleanupDownload
 {
-    NSLog(@"cleanupDownload");
 }
 
 - (void)logErrorDetail: (NSError *)error
 {
-    NSLog(@"error: %@", error);
+    NSLog(@"error: %@", [error debugDescription]);
 }
 
 - (void)logDownloadTaskError: (NSInteger)errorNum
@@ -699,7 +682,6 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
 #pragma NSURLSessionDownloadDelegate
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didResumeAtOffset:(int64_t)fileOffset expectedTotalBytes:(int64_t)expectedTotalBytes
 {
-    NSLog(@"-----------didResumeAtOffset-----------");
     NSLog(@"#%lld#%lld#", fileOffset, expectedTotalBytes);
 }
 
@@ -716,7 +698,6 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location
 {
-    NSLog(@"-----------didFinishDownloadingToURL-----------");
     //TODO: erase console txt
     //TODO: delete RESUME_DATA_FILE_NAME
     //TODO: copy cache to source.json.
@@ -736,7 +717,6 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
 
 - (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session
 {
-    NSLog(@"URLSessionDidFinishEventsForBackgroundURLSession");
     if (_backgroundEvent != nil)
     {
         _backgroundEvent();
@@ -753,10 +733,8 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
 #pragma downloadComplete
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
-    NSLog(@"-----------didCompleteWithError-----------");
     if (error == nil)
     {
-        NSLog(@"all task done, invalid sesstion");
         [session finishTasksAndInvalidate];
     }
     else
@@ -781,7 +759,6 @@ static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"
 
 - (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(NSError *)error
 {
-    NSLog(@"-----------didBecomeInvalidWithError-----------");
 }
 
 #pragma NSXMLParserDelegate

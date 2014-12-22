@@ -74,7 +74,6 @@
 		D638420119DBF416005A2327 = {
 			isa = PBXGroup;
 			children = (
-				931E87191A02634F00883703 /* AVFoundation.framework */,
 				D638420C19DBF416005A2327 /* EverydayEnglish */,
 				D638422619DBF416005A2327 /* EverydayEnglishTests */,
 				D638420B19DBF416005A2327 /* Products */,
@@ -112,6 +111,7 @@
 		D638420D19DBF416005A2327 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				931E87191A02634F00883703 /* AVFoundation.framework */,
 				D638420E19DBF416005A2327 /* Info.plist */,
 				D638420F19DBF416005A2327 /* main.m */,
 				9319F0DC19F947A50047FA0B /* source.json */,

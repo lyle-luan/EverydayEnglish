@@ -38,7 +38,6 @@
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler
 {
 //    [self redirectConsoleLogToDocumentFolder];
-    NSLog(@"handleEventsForBackgroundURLSession");
     [EDEHttpManager handleEventsForBackgroundURLSession:identifier completionHandler:completionHandler];
 }
 
@@ -48,7 +47,6 @@
     NSString *documentsDirectory = paths.firstObject;
     
     NSString *logPath = [documentsDirectory stringByAppendingPathComponent:@"console_log.txt"];
-    NSLog(@"%@", logPath);
     
 //    NSFileManager *fileManager = [NSFileManager defaultManager];
 //    [fileManager removeItemAtPath:logPath error:nil];
