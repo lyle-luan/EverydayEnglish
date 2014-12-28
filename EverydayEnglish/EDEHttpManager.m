@@ -32,7 +32,7 @@ static NSString * const DOWNLOAD_URL_STRING         = @"http://localhost/downloa
 static const char* const SERIAL_QUEUE_LABLE         = "com.EverydayEnglish.serialQueue";
 
 static NSString * const RESUME_DATA_KEY_NSURLSessionResumeInfoLocalPath     = @"NSURLSessionResumeInfoLocalPath";
-static NSString * const backgroundSessionConfigurationIdentifier_SUFFIX     = @"1234567890";
+static NSString * const backgroundSessionConfigurationIdentifier_SUFFIX     = @"1234567890123";
 static NSString * const backgroundDownloadQueueIdentifier_SUFFIX            = @"backgroundDownloadQueue";
 
 static NSString * const KEY_CANCEL_BY_USRE          = @"isCanceledByUser";
@@ -123,8 +123,6 @@ static NSString * const KEY_CANCEL_BY_USRE          = @"isCanceledByUser";
         else
         {
             NSLog(@"download task may being");
-            [weakSelf stopInstance];
-            [weakSelf startInstance];
         }
     }];
 }
@@ -813,9 +811,9 @@ static NSString * const KEY_CANCEL_BY_USRE          = @"isCanceledByUser";
         [self logErrorDetail:error];
         
         //TODO: downloadTask state and error code 这里是最简单的做法。
-        if ((error.code == NSURLErrorCancelled) && (error.userInfo[NSURLErrorBackgroundTaskCancelledReasonKey] == nil))
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:KEY_CANCEL_BY_USRE])
         {
-            //cause by - (void)stopInstance
+            NSLog(@"stop by user");
         }
         else if ([error.userInfo objectForKey:NSURLSessionDownloadTaskResumeData] != nil)
         {
