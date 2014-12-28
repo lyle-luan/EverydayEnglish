@@ -37,6 +37,7 @@
 
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler
 {
+    NSLog(@"handleEventsForBackgroundURLSession");
 //    [self redirectConsoleLogToDocumentFolder];
     [EDEHttpManager handleEventsForBackgroundURLSession:identifier completionHandler:completionHandler];
 }
