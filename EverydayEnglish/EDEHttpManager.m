@@ -811,7 +811,7 @@ static NSString * const KEY_CANCEL_BY_USRE          = @"isCanceledByUser";
         [self logErrorDetail:error];
         
         //TODO: downloadTask state and error code 这里是最简单的做法。
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:KEY_CANCEL_BY_USRE])
+        if ([self isDownloadTaskDidCancelByUser])
         {
             NSLog(@"stop by user");
         }
